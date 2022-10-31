@@ -1,0 +1,8 @@
+server {
+    listen myhost:80;
+    server_name  myhost;
+    location / {
+        root /var/www/html;
+        proxy_pass http://192.168.209.128:8080/myweb.html;
+    }
+}

@@ -1,0 +1,32 @@
+---
+- name: Setup apache
+  apt:
+    name: apache2
+    state: present
+
+- name: Insure index directory is exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "/var/www/html"
+    - "/etc/apache2/sites-available"
+
+- name: Copy index page
+  template:
+    src: "files/index.html.j2"
+    dest: "/var/www/html/index.html"
+
+- name: Set up virtuahHost
+  template:
+    src: "templates/apache.conf.j2"
+    dest: "/etc/apache2/sites-available/000-default.conf"
+  notify: 
+    - restart-apache2
+
+- name: "UFW firewall allow HTTP on port 80"
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp

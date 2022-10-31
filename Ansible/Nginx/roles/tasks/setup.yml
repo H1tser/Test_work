@@ -1,0 +1,18 @@
+---
+- name: Setup nginx
+  apt:
+    name: nginx
+    state: absent
+
+# - name: "UFW allow Nginx HTTP on port 80"
+#   ufw:
+#     rule: allow
+#     port: 80
+#     proto: tcp
+
+# - name: Set up virtuahHost
+#   template:
+#     src: "templates/nginx.conf.j2"
+#     dest: "/etc/nginx/sites-enabled/default"
+#   notify: 
+#     - restart-nginx

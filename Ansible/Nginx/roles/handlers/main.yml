@@ -1,0 +1,9 @@
+---
+# - name: APT-Update
+#   apt:
+#     update_cache: true
+
+- name: restart-nginx
+  systemd:
+    name: nginx
+    state: restarted

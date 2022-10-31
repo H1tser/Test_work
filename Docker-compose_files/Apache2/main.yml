@@ -1,0 +1,23 @@
+---
+- name: Launch apache2 container
+  hosts: hosts
+  gather_facts: yes
+  become: yes
+  tasks:
+  - name: "Creating Directory"
+    file:
+      path: /web
+      state: directory
+  - name: "copy content"
+    copy:
+      src: "files/myweb.html"
+      dest: "/web/myweb.html"
+  - name: Launch apache2 container
+    docker_container:
+      name: apache2-container
+      image: httpd
+      ports:
+      - "8080:80"
+      volumes: /web/:/usr/local/apache2/htdocs/
+
+      # volumes: /templates/:/usr/local/apache2/conf/httpd.conf && /files/:/usr/local/apache2/htdocs/

@@ -1,0 +1,21 @@
+---
+- name: Install https pac
+  apt:
+    name: [apt-transport-https, ca-certificates, software-properties-common]
+    state: present
+
+- name: add GPG keyt for docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+
+- name: add docker repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  notify: Update-APT 
+
+- name: install docker
+  apt:
+    name: docker-ce
+    state: present
+  notify: restart-docker

@@ -1,0 +1,9 @@
+---
+- name: Update-APT
+  apt:
+    update_cache: true
+
+- name: restart-docker
+  systemd:
+    name: docker
+    state: restarted
